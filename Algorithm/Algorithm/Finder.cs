@@ -19,44 +19,18 @@ namespace Algorithm
 
         public Pair Find(Distance dist)
         {
-            // changed var name from tr to pairs
-            var pairs = new List<Pair>();
-
-            // looping through all the people and finding the difference
-            for(var i = 0; i < _people.Count - 1; i++)
-            {
-                for(var j = i + 1; j < _people.Count; j++)
-                {
-                    // changed var name from r to currentPair
-                    var currentPair = new Pair();
-                    
-                    // sorting by birthdates, lowest to highest
-                    if(_people[i].BirthDate < _people[j].BirthDate)
-                    {
-                        currentPair.P1 = _people[i];
-                        currentPair.P2 = _people[j];
-                    }
-                    else
-                    {
-                        currentPair.P1 = _people[j];
-                        currentPair.P2 = _people[i];
-                    }
-                    // the difference between the two birthdates
-                    currentPair.Difference = currentPair.P2.BirthDate - currentPair.P1.BirthDate;
-                    pairs.Add(currentPair);
-                }
-            }
+            var pairs = OrderByBirthdate();
 
             // if there is only once set of difference added (i.e. only two people)
             // returns pair as is
-            if(pairs.Count < 1)
-            {
-                return new Pair();
-            }
-
-            Pair answer = pairs[0];
+            if(pairs.Count < 1) return new Pair();
+            
+            var answer = pairs[0];
             foreach(var result in pairs)
             {
+                //switch statement violates open/close principle
+                // each enum can be a class
+                // both classes implements an interface
                 switch(dist)
                 {
                     // getting smallest difference pair value 
@@ -79,5 +53,42 @@ namespace Algorithm
 
             return answer;
         }
+
+        //extracted helper methods
+        
+        private List<Pair> OrderByBirthdate()
+        {
+            var pairs = new List<Pair>();
+            for (var i = 0; i < _people.Count; i++)
+            {
+                for (var j = i + 1; j < _people.Count; j++)
+                {
+                    var currentPair = SortLowToHigh(i, j);
+                    currentPair.Difference = currentPair.P2.BirthDate - currentPair.P1.BirthDate;
+                    
+                    pairs.Add(currentPair);
+                }
+            }
+
+            return pairs;
+        }
+
+        private Pair SortLowToHigh(int index1, int index2)
+        {
+            var currentPair = new Pair();
+            if (_people[index1].BirthDate < _people[index2].BirthDate)
+            {
+                currentPair.P1 = _people[index1];
+                currentPair.P2 = _people[index2]; 
+            }
+            else
+            {
+                currentPair.P1 = _people[index2];
+                currentPair.P2 = _people[index1];
+            }
+
+            return currentPair;
+        }
+        
     }
 }
