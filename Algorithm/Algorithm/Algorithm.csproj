@@ -41,9 +41,9 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Finder.cs" />
-        <Compile Include="F.cs" />
-        <Compile Include="FT.cs" />
-        <Compile Include="Thing.cs" />
+        <Compile Include="Pair.cs" />
+        <Compile Include="Distance.cs" />
+        <Compile Include="Profile.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

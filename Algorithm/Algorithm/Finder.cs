@@ -4,56 +4,72 @@ namespace Algorithm
 {
     public class Finder
     {
-        private readonly List<Thing> _p;
+        // renamed field from _p to _people
+        private readonly List<Profile> _people;
 
-        public Finder(List<Thing> p)
+        public Finder(List<Profile> people)
         {
-            _p = p;
+            _people = people;
         }
 
-        public F Find(FT ft)
-        {
-            var tr = new List<F>();
+        // what are we actually trying to find?
+        // Find does mainly two things:
+        // sorts people in list by birthdates, lowest to highest
+        // returns a pair of people depending on enum
 
-            for(var i = 0; i < _p.Count - 1; i++)
+        public Pair Find(Distance dist)
+        {
+            // changed var name from tr to pairs
+            var pairs = new List<Pair>();
+
+            // looping through all the people and finding the difference
+            for(var i = 0; i < _people.Count - 1; i++)
             {
-                for(var j = i + 1; j < _p.Count; j++)
+                for(var j = i + 1; j < _people.Count; j++)
                 {
-                    var r = new F();
-                    if(_p[i].BirthDate < _p[j].BirthDate)
+                    // changed var name from r to currentPair
+                    var currentPair = new Pair();
+                    
+                    // sorting by birthdates, lowest to highest
+                    if(_people[i].BirthDate < _people[j].BirthDate)
                     {
-                        r.P1 = _p[i];
-                        r.P2 = _p[j];
+                        currentPair.P1 = _people[i];
+                        currentPair.P2 = _people[j];
                     }
                     else
                     {
-                        r.P1 = _p[j];
-                        r.P2 = _p[i];
+                        currentPair.P1 = _people[j];
+                        currentPair.P2 = _people[i];
                     }
-                    r.D = r.P2.BirthDate - r.P1.BirthDate;
-                    tr.Add(r);
+                    // the difference between the two birthdates
+                    currentPair.Difference = currentPair.P2.BirthDate - currentPair.P1.BirthDate;
+                    pairs.Add(currentPair);
                 }
             }
 
-            if(tr.Count < 1)
+            // if there is only once set of difference added (i.e. only two people)
+            // returns pair as is
+            if(pairs.Count < 1)
             {
-                return new F();
+                return new Pair();
             }
 
-            F answer = tr[0];
-            foreach(var result in tr)
+            Pair answer = pairs[0];
+            foreach(var result in pairs)
             {
-                switch(ft)
+                switch(dist)
                 {
-                    case FT.One:
-                        if(result.D < answer.D)
+                    // getting smallest difference pair value 
+                    case Distance.Closest:
+                        if(result.Difference < answer.Difference)
                         {
                             answer = result;
                         }
                         break;
-
-                    case FT.Two:
-                        if(result.D > answer.D)
+                    
+                    // getting greatest difference pair value
+                    case Distance.Furthest:
+                        if(result.Difference > answer.Difference)
                         {
                             answer = result;
                         }
