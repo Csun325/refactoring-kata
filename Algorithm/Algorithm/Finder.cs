@@ -1,60 +1,31 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Algorithm
 {
-    public class Finder
+    /*
+     * Crucial changes:
+     * Instead of relying on enum, added extra interface to constructor
+     * The Find method no longer needs the Distance enum
+     */
+    public class Finder 
     {
-        // renamed field from _p to _people
-        private readonly List<Profile> _people;
+        private readonly List<Person> _people;
+        private readonly IDistance _distanceType;
 
-        public Finder(List<Profile> people)
+        public Finder(List<Person> people, IDistance distanceType)
         {
             _people = people;
+            _distanceType = distanceType;
         }
-
-        // what are we actually trying to find?
-        // Find does mainly two things:
-        // sorts people in list by birthdates, lowest to highest
-        // returns a pair of people depending on enum
-
+        
         public Pair Find(Distance dist)
         {
             var pairs = OrderByBirthdate();
-
-            // if there is only once set of difference added (i.e. only two people)
-            // returns pair as is
-            if(pairs.Count < 1) return new Pair();
-            
-            var answer = pairs[0];
-            foreach(var result in pairs)
-            {
-                //switch statement violates open/close principle
-                // each enum can be a class
-                // both classes implements an interface
-                switch(dist)
-                {
-                    // getting smallest difference pair value 
-                    case Distance.Closest:
-                        if(result.Difference < answer.Difference)
-                        {
-                            answer = result;
-                        }
-                        break;
-                    
-                    // getting greatest difference pair value
-                    case Distance.Furthest:
-                        if(result.Difference > answer.Difference)
-                        {
-                            answer = result;
-                        }
-                        break;
-                }
-            }
-
-            return answer;
+            return pairs.Count < 1 ? new Pair() : _distanceType.CalculateDist(pairs);
         }
 
-        //extracted helper methods
+        //extracted helper methods below
         
         private List<Pair> OrderByBirthdate()
         {
@@ -69,7 +40,6 @@ namespace Algorithm
                     pairs.Add(currentPair);
                 }
             }
-
             return pairs;
         }
 
@@ -86,9 +56,8 @@ namespace Algorithm
                 currentPair.P1 = _people[index2];
                 currentPair.P2 = _people[index1];
             }
-
             return currentPair;
         }
-        
+
     }
 }

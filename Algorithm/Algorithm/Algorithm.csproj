@@ -12,6 +12,7 @@
         <AssemblyName>Algorithm</AssemblyName>
         <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
+        <LangVersion>latest</LangVersion>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <DebugSymbols>true</DebugSymbols>
@@ -40,10 +41,13 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Closest.cs" />
         <Compile Include="Finder.cs" />
+        <Compile Include="Furthest.cs" />
+        <Compile Include="IDistance.cs" />
         <Compile Include="Pair.cs" />
         <Compile Include="Distance.cs" />
-        <Compile Include="Profile.cs" />
+        <Compile Include="Person.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
