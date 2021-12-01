@@ -10,9 +10,9 @@ namespace Algorithm.Test
         public void Returns_Empty_Results_When_Given_Empty_List()
         {
             var list = new List<Person>();
-            var finder = new Finder(list, new Closest()); // instead of passing enum to find, add to constructot
+            var finder = new Finder(list, new Closest()); 
 
-            var result = finder.Find(Distance.Closest);
+            var result = finder.FindPair();
 
             Assert.Null(result.P1);
             Assert.Null(result.P2);
@@ -24,7 +24,7 @@ namespace Algorithm.Test
             var list = new List<Person>() { sue };
             var finder = new Finder(list, new Closest());
 
-            var result = finder.Find(Distance.Closest);
+            var result = finder.FindPair();
 
             Assert.Null(result.P1);
             Assert.Null(result.P2);
@@ -36,7 +36,7 @@ namespace Algorithm.Test
             var list = new List<Person>() { sue, greg };
             var finder = new Finder(list, new Closest());
 
-            var result = finder.Find(Distance.Closest);
+            var result = finder.FindPair();
 
             Assert.Same(sue, result.P1);
             Assert.Same(greg, result.P2);
@@ -48,7 +48,7 @@ namespace Algorithm.Test
             var list = new List<Person>() { greg, mike };
             var finder = new Finder(list, new Furthest());
 
-            var result = finder.Find(Distance.Furthest);
+            var result = finder.FindPair();
 
             Assert.Same(greg, result.P1);
             Assert.Same(mike, result.P2);
@@ -60,7 +60,7 @@ namespace Algorithm.Test
             var list = new List<Person>() { greg, mike, sarah, sue };
             var finder = new Finder(list, new Furthest());
 
-            var result = finder.Find(Distance.Furthest);
+            var result = finder.FindPair();
 
             Assert.Same(sue, result.P1);
             Assert.Same(sarah, result.P2);
@@ -72,7 +72,7 @@ namespace Algorithm.Test
             var list = new List<Person>() { greg, mike, sarah, sue };
             var finder = new Finder(list, new Closest());
 
-            var result = finder.Find(Distance.Closest);
+            var result = finder.FindPair();
 
             Assert.Same(sue, result.P1);
             Assert.Same(greg, result.P2);

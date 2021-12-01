@@ -2,7 +2,6 @@
 
 namespace Algorithm
 {
-    // renamed class from F to Pair
     public class Pair
     {
         public Person P1 { get; set; }

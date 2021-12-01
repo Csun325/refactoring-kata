@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Algorithm
 {
@@ -19,10 +20,10 @@ namespace Algorithm
             _distanceType = distanceType;
         }
         
-        public Pair Find(Distance dist)
+        public Pair FindPair()
         {
             var pairs = OrderByBirthdate();
-            return pairs.Count < 1 ? new Pair() : _distanceType.CalculateDist(pairs);
+            return !pairs.Any() ? new Pair() : _distanceType.CalculateDist(pairs);
         }
 
         //extracted helper methods below

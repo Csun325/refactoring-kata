@@ -2,7 +2,6 @@
 
 namespace Algorithm
 {
-    // renamed class from thing to profile
     public class Person
     {
         public string Name { get; set; }
